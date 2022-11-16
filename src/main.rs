@@ -9,8 +9,8 @@ fn main() {
         process::exit(1);
     });
 
-    println!("搜索:{}", config.query);
-    println!("在这个文件:{}", config.filename);
+    // println!("搜索:{}", config.query);
+    // println!("在这个文件:{}", config.filename);
 
     if let Err(err) = run(config) {
         println!("发生错误: {}", err);
