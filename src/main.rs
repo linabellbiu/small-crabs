@@ -3,8 +3,7 @@ use std::{env, process};
 use small_crabs::{Config, run};
 
 fn main() {
-    let args: Vec<String> = env::args().collect();
-    let config = Config::new(&args).unwrap_or_else(|err| {
+    let config = Config::new(env::args()).unwrap_or_else(|err| {
         eprintln!("输入的参数错误: {}", err);
         process::exit(1);
     });

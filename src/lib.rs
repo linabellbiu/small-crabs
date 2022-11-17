@@ -1,5 +1,5 @@
+use std::{env, fs};
 use std::error::Error;
-use std::fs;
 
 pub struct Config {
     pub query: String,
@@ -8,19 +8,27 @@ pub struct Config {
 }
 
 impl Config {
-    pub fn new(args: &[String]) -> Result<Config, &str> {
-        if args.len() < 3 {
-            return Err("没有足够的参数");
-        }
+    pub fn new(mut args: env::Args) -> Result<Config, &'static str> {
+        args.next();
 
-        let mut case_sensitive = true;
-        if args.len() > 3 && !args[3].is_empty() {
-            case_sensitive = false;
-        }
+        let query = match args.next() {
+            Some(arg) => arg,
+            None => return Err("缺少查询参数"),
+        };
+
+        let filename = match args.next() {
+            Some(arg) => arg,
+            None => return Err("缺少查询的文件"),
+        };
+
+        let case_sensitive = match args.next() {
+            Some(_) => false,
+            None => true,
+        };
 
         Ok(Config {
-            query: args[1].clone(),
-            filename: args[2].clone(),
+            query,
+            filename,
             case_sensitive,
         })
     }
